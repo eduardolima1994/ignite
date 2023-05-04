@@ -5,7 +5,7 @@ process.stdin
   .pipe(process.stdout)
 */
 
-import { Readable } from 'node:stream';
+import { Readable, Writable, Transform } from 'node:stream';
 
 class OnToHundredStream extends Readable {
 
@@ -26,7 +26,22 @@ class OnToHundredStream extends Readable {
     }, 1000);
 
   }
-}
+};
+
+class InverseNumberStream extends Transform {
+  _transform(chunk, encoding, callback) {
+    const transformed = Number(chunk.toString()) * -1;
+    callback(null, Buffer.from(String(transformed)));
+  }
+};
+
+class MultiplyByTenStream extends Writable {
+  _write(chunk, encoding, callback) {
+    console.log(Number(chunk.toString()) * 10);
+    callback();
+  };
+};
 
 new OnToHundredStream()
-  .pipe(process.stdout);
+  .pipe(new InverseNumberStream())
+  .pipe(new MultiplyByTenStream());
