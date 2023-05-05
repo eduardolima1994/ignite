@@ -1,3 +1,6 @@
+#fileDb
+db.json
+
 # Logs
 logs
 *.log
