@@ -1,11 +1,13 @@
-interface User {
-  birthYear: number
-}
+import fastify from "fastify";
 
-function calculateAgeOfUser(user: User) {
-  return new Date().getFullYear() - user.birthYear;
-}
+const app = fastify();
 
-calculateAgeOfUser({
-  birthYear: 1994,
-})
+app.get('/hello', () => {
+  return '🚀 Hello World!';
+});
+
+app.listen({
+  port: 3333
+}).then(() => {
+  console.log('Server is running on port 3333');
+});
