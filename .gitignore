@@ -1,4 +1,7 @@
-#fileDb
+#Sqlite file
+tmp
+
+#FileDb
 db.json
 
 # Logs
