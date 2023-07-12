@@ -12,7 +12,7 @@ describe('Search Gyms (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to create a gym', async () => {
+  it('should be able to search gyms by title', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     await request(app.server)
@@ -45,7 +45,7 @@ describe('Search Gyms (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
       .send()
 
-    expect(response.status).toEqual(200)
+    expect(response.statusCode).toEqual(200)
     expect(response.body.gyms).toHaveLength(1)
     expect(response.body.gyms).toEqual([
       expect.objectContaining({
