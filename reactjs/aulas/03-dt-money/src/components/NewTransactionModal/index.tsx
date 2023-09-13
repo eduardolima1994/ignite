@@ -1,15 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { Overlay, Content } from './styles';
 
 export function NewTransactionModal() {
   return (
     <Dialog.Portal>
-      <Dialog.Overlay />
+      <Overlay />
 
-      <Dialog.Content>
-      <Dialog.Title>Nova transação</Dialog.Title>
+      <Content>
+        <Dialog.Title>Nova transação</Dialog.Title>
 
-      <Dialog.Close />
-      </Dialog.Content>
+        <Dialog.Close />
+      </Content>
       
     </Dialog.Portal>    
   )
