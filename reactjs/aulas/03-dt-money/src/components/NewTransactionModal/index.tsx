@@ -1,11 +1,17 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { Overlay, Content, CloseButton, TransactionType, TransactionTypeButton } from './styles';
-import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
-import * as z from 'zod';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext } from 'react';
-import { TransactionsContext } from '../../contexts/TransactionsContext';
+import * as Dialog from '@radix-ui/react-dialog'
+import {
+  Overlay,
+  Content,
+  CloseButton,
+  TransactionType,
+  TransactionTypeButton,
+} from './styles'
+import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react'
+import * as z from 'zod'
+import { Controller, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useContext } from 'react'
+import { TransactionsContext } from '../../contexts/TransactionsContext'
 
 const newTransactionFormSchema = z.object({
   description: z.string(),
@@ -14,7 +20,7 @@ const newTransactionFormSchema = z.object({
   type: z.enum(['income', 'outcome']),
 })
 
-type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>;
+type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function NewTransactionModal() {
   const { createTransactions } = useContext(TransactionsContext)
@@ -28,18 +34,18 @@ export function NewTransactionModal() {
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(newTransactionFormSchema),
     defaultValues: {
-      type: 'income'
-    }
+      type: 'income',
+    },
   })
 
   async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
     const { description, price, category, type } = data
-    
+
     await createTransactions({
       description,
       price,
       category,
-      type
+      type,
     })
 
     reset()
@@ -51,46 +57,46 @@ export function NewTransactionModal() {
 
       <Content>
         <Dialog.Title>Nova transação</Dialog.Title>
-        
+
         <CloseButton>
           <X size={24} />
         </CloseButton>
 
         <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
-          <input 
-            type="text" 
-            placeholder="Descrição" 
+          <input
+            type="text"
+            placeholder="Descrição"
             required
-            {...register('description')} 
+            {...register('description')}
           />
-          <input 
-            type="number" 
-            placeholder="Preço" 
+          <input
+            type="number"
+            placeholder="Preço"
             required
-            {...register('price', { valueAsNumber: true })} 
+            {...register('price', { valueAsNumber: true })}
           />
-          <input 
-            type="text" 
-            placeholder="Categoria" 
+          <input
+            type="text"
+            placeholder="Categoria"
             required
-            {...register('category')} 
+            {...register('category')}
           />
 
           <Controller
             control={control}
             name="type"
-            render={( { field } ) => {
+            render={({ field }) => {
               return (
                 <TransactionType
                   onValueChange={field.onChange}
                   value={field.value}
                 >
-                  <TransactionTypeButton variant='income' value='income'>
+                  <TransactionTypeButton variant="income" value="income">
                     <ArrowCircleUp size={24} />
                     Entrada
                   </TransactionTypeButton>
 
-                  <TransactionTypeButton variant='outcome' value='outcome'>
+                  <TransactionTypeButton variant="outcome" value="outcome">
                     <ArrowCircleDown size={24} />
                     Saída
                   </TransactionTypeButton>
@@ -103,9 +109,7 @@ export function NewTransactionModal() {
             Cadastrar
           </button>
         </form>
-
       </Content>
-      
-    </Dialog.Portal>    
+    </Dialog.Portal>
   )
 }
